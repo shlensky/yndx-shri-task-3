@@ -69,7 +69,7 @@ const setPreviewContent = (doc: vscode.TextDocument, context: vscode.ExtensionCo
             const html = template.apply(data);
             panel.webview.html = previewHtml
                 .replace('{{content}}', html)
-                .replace('{{mediaPath}}', mediaPath);
+                .replace(new RegExp('{{mediaPath}}', 'g'), mediaPath);
         } catch(e) {}
     }
 };

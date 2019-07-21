@@ -52,7 +52,7 @@
 		},
 		"commands": [
 			{
-				"command": "example.showPrevievToSide",
+				"command": "example.showPreviewToSide",
 				"title": "Show preview",
 				"category": "Example",
 				"icon": {

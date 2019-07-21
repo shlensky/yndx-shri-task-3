@@ -55,7 +55,7 @@ declare namespace JsonToAst {
         loc: AstLocation;
     }
 
-    export type AstJsonEntity = AstObject | AstArray | AstLiteral;
+    export type AstJsonEntity = AstObject | AstArray | AstLiteral | AstProperty;
 }
 
 declare function JsonToAst(json: string): JsonToAst.AstJsonEntity;

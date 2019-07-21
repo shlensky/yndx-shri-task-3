@@ -80,9 +80,12 @@ async function validateTextDocument(textDocument: TextDocument): Promise<void> {
             ? [{ key: RuleKeys.UppercaseNamesIsForbidden, loc: property.key.loc }] 
             : [];
 
-    const validateObject = (obj: jsonToAst.AstObject): LinterProblem<RuleKeys>[] =>
-        obj.children.some(p => p.key.value === 'block') ? [] : [{ key: RuleKeys.BlockNameIsRequired, loc: obj.loc }] ;
-        
+    const validateObject = (obj: jsonToAst.AstObject): LinterProblem<RuleKeys>[] => {
+        return obj.children.some(p => {
+            return p.type === "Property" ? p.key.value === 'block' : false;
+        }) ? [] : [{ key: RuleKeys.BlockNameIsRequired, loc: obj.loc }] ;
+    };
+
     const diagnostics: Diagnostic[] = makeLint(json, validateProperty, validateObject)
         .reduce((list: Diagnostic[], problem: LinterProblem<RuleKeys>): Diagnostic[] => {
             const severity = GetDiagnosticSeverity(problem.key);

@@ -17,9 +17,11 @@ function walk(
         case 'Object':
             cbObj(node);
 
-            node.children.forEach((property: jsonToAst.AstProperty) => {
-                cbProp(property);
-                walk(property.value, cbProp, cbObj);
+            node.children.forEach((entity) => {
+                if (entity.type === "Property") {
+                    cbProp(entity);
+                    walk(entity.value, cbProp, cbObj);    
+                }                
             });
             break;
         case 'Array':
