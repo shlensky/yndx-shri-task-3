@@ -6,11 +6,11 @@
       "block": "body",
       "content": [
         {
-          "BLOCK": "menu",
+          "block": "menu",
           "content": [
             {"content": "item 1"},
-            {"content": "item 2"},
-            {"content": "item 3"}
+            {"content": "item 2", "block":"test"},
+            {"content": "item 3", "block":"test"}
           ]
         },
         {

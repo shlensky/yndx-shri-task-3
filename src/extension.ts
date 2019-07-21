@@ -132,5 +132,8 @@ export function activate(context: vscode.ExtensionContext) {
 }
 
 export function deactivate() {
-    client.stop();
+    if (!client) {
+        return undefined;
+    }
+    return client.stop();
 }
