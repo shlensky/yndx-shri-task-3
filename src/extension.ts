@@ -14,7 +14,7 @@ import {
 const previewPath: string = resolve(__dirname, '../preview/index.html');
 const previewHtml: string = readFileSync(previewPath).toString();
 const template = bemhtml.compile();
-const linterEnableSetting = "example.enable";
+const linterEnableSetting = 'example.enable';
 
 let client: LanguageClient;
 const PANELS: Record<string, vscode.WebviewPanel> = {};
@@ -61,7 +61,7 @@ const setPreviewContent = (doc: vscode.TextDocument, context: vscode.ExtensionCo
 
     if (panel) {
         const mediaPath = vscode.Uri.file(context.extensionPath).with({
-            scheme: "vscode-resource"
+            scheme: 'vscode-resource'
         }).toString();
 
         try {
