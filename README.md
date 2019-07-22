@@ -66,28 +66,33 @@
 Было видно, что не применяются css стили файла style.css.
 Для отладки запустил Webview Developer Tools, что бы посмотреть ошибки в консоле.
 Оказалось что base href={{mediaPath}} не работал, пришлось добавить {{mediaPath}} в то место где подключались стили и скрипт.
-+ убрал из Content-Security-Policy nonce для стилей.
+Убрал из Content-Security-Policy nonce для стилей.
 
 4. Линтер не подсвечивал места с ошибками
 Добавил launch configuration для attach to server, что бы можно было делать breakpoint'ы в коде сервера.
-Во время отладки увидел код "errors.concat(...);", заменил на errors = errors.contact(...)
+Во время отладки увидел код `"errors.concat(...);",` заменил на `errors = errors.contact(...)`
 т.к. знал что concat не модифицирует исходный массив.
 
-5. Добавил старт/остановку language client'a в зависимости от настройки "example.enable".
+5. Добавил старт/остановку language client'a в зависимости от настройки `example.enable`.
 
 6. Конструкция показалось странной:
-    const e = panel.onDidDispose(() => {
-        delete PANELS[document.uri.path];
-        e.dispose();
-    });
+
+    ```
+        const e = panel.onDidDispose(() => {
+            delete PANELS[document.uri.path];
+            e.dispose();
+        });
+    ```
 
     сделал что бы выглядела так же как в документации:
 
-    panel.onDidDispose(() => {
-        delete PANELS[document.uri.path];
-    });
+    ```
+        panel.onDidDispose(() => {
+            delete PANELS[document.uri.path];
+        });
+    ```
 
 7. Отформатировал код (в некоторых файлах были и табы и пробелы, двойные и одиночные кавычки)
-+ Удалил непонятные файлы jsonMain.ts и hash.ts которые не задействованы в проекте (+ удалил npm пакет request-light).
+Удалил непонятные файлы jsonMain.ts и hash.ts которые не задействованы в проекте (+ удалил npm пакет request-light).
 
 8. Поправил вызов sendDiagnostics даже когда нет ошибок, иначе последняя ошибка не пропадала после исправления.
