@@ -89,9 +89,8 @@ const initPreviewPanel = (document: vscode.TextDocument) => {
 
     PANELS[document.uri.path] = panel;
 
-    const e = panel.onDidDispose(() => {
+    panel.onDidDispose(() => {
         delete PANELS[document.uri.path];
-        e.dispose();
     });
 
     return panel;

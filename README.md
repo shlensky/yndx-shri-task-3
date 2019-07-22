@@ -74,3 +74,16 @@
 т.к. знал что concat не модифицирует исходный массив.
 
 5. Добавил старт/остановку language client'a в зависимости от настройки "example.enable".
+
+6. Конструкция показалось странной:
+    const e = panel.onDidDispose(() => {
+        delete PANELS[document.uri.path];
+        e.dispose();
+    });
+
+    сделал что бы выглядела так же как в документации:
+
+    panel.onDidDispose(() => {
+        delete PANELS[document.uri.path];
+    });
+
