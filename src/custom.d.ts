@@ -63,3 +63,5 @@ declare function JsonToAst(json: string): JsonToAst.AstJsonEntity;
 declare module 'json-to-ast' {
     export = JsonToAst;
 }
+
+declare function lint(json: string): any[];

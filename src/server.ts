@@ -39,7 +39,7 @@ function GetDiagnosticMessage(key: RuleKeys): string {
         case RuleKeys.BlockNameIsRequired:
             return 'Field named \'block\' is required!';
         default:
-            return `Unknown problem type '${key}'`;
+            return key;
     }
 }
 
@@ -59,8 +59,10 @@ function GetDiagnosticSeverity(key: RuleKeys): DiagnosticSeverity | undefined {
             return DiagnosticSeverity.Information;
         case Severity.Hint:
             return DiagnosticSeverity.Hint;
-        default:
+        case Severity.None:
             return undefined;
+        default:
+            return DiagnosticSeverity.Error;
     }
 }
 
@@ -108,9 +110,7 @@ async function validateTextDocument(textDocument: TextDocument): Promise<void> {
             return list;
         }, []);
 
-    if (diagnostics.length) {
-        conn.sendDiagnostics({ uri: textDocument.uri, diagnostics });
-    }
+    conn.sendDiagnostics({ uri: textDocument.uri, diagnostics });
 }
 
 docs.onDidChangeContent(change => {

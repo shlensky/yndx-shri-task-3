@@ -1,4 +1,5 @@
 import * as jsonToAst from 'json-to-ast';
+import '../vendor/block-linter';
 
 function parseJson(json: string): jsonToAst.AstJsonEntity | undefined {
     try {
@@ -18,7 +19,7 @@ function walk(
             cbObj(node);
 
             node.children.forEach((entity) => {
-                if (entity.type === "Property") {
+                if (entity.type === 'Property') {
                     cbProp(entity);
                     walk(entity.value, cbProp, cbObj);
                 }
@@ -55,6 +56,14 @@ export function makeLint<TProblemKey>(
     if (ast) {
         walk(ast, cbProp, cbObj);
     }
+
+    const blockLinterErrors = lint(json);
+    errors = errors.concat(blockLinterErrors.map(({ error, location }) => {
+        return {
+            key: error,
+            loc: location
+        } as LinterProblem<TProblemKey>;
+    }));
 
     return errors;
 }
