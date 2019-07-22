@@ -1,6 +1,6 @@
 import * as jsonToAst from 'json-to-ast';
 
-function parseJson(json: string):jsonToAst.AstJsonEntity | undefined  {
+function parseJson(json: string): jsonToAst.AstJsonEntity | undefined {
     try {
         return jsonToAst(json);
     } catch (err) {
@@ -9,7 +9,7 @@ function parseJson(json: string):jsonToAst.AstJsonEntity | undefined  {
 }
 
 function walk(
-    node: jsonToAst.AstJsonEntity, 
+    node: jsonToAst.AstJsonEntity,
     cbProp: (property: jsonToAst.AstProperty) => void,
     cbObj: (property: jsonToAst.AstObject) => void
 ) {
@@ -20,8 +20,8 @@ function walk(
             node.children.forEach((entity) => {
                 if (entity.type === "Property") {
                     cbProp(entity);
-                    walk(entity.value, cbProp, cbObj);    
-                }                
+                    walk(entity.value, cbProp, cbObj);
+                }
             });
             break;
         case 'Array':
@@ -36,7 +36,7 @@ export interface LinterProblem<TKey> {
 }
 
 export function makeLint<TProblemKey>(
-    json: string, 
+    json: string,
     validateProperty: (property: jsonToAst.AstProperty) => LinterProblem<TProblemKey>[],
     validateObject: (property: jsonToAst.AstObject) => LinterProblem<TProblemKey>[]
 ): LinterProblem<TProblemKey>[] {
