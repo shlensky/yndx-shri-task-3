@@ -3,7 +3,8 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
+        <base href="{{mediaPath}}">
+        <meta http-equiv="Content-Security-Policy" content="default-src vscode-resource:; img-src vscode-resource: https:; script-src vscode-resource:; style-src vscode-resource:;"/>
         <link rel="stylesheet" href="{{mediaPath}}/preview/style.css" />
     </head>
     <body>

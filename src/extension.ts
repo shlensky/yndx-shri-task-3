@@ -14,6 +14,7 @@ import {
 const previewPath: string = resolve(__dirname, '../preview/index.html');
 const previewHtml: string = readFileSync(previewPath).toString();
 const template = bemhtml.compile();
+const linterEnableSetting = "example.enable";
 
 let client: LanguageClient;
 const PANELS: Record<string, vscode.WebviewPanel> = {};
@@ -120,15 +121,28 @@ export function activate(context: vscode.ExtensionContext) {
     console.info('Congratulations, your extension is now active!');
 
     client = createLanguageClient(context);
+    if (vscode.workspace.getConfiguration().get(linterEnableSetting)) {
+        client.start();
+    }
 
-    client.start();
+    const eventConfigurationChange = vscode.workspace.onDidChangeConfiguration((e: vscode.ConfigurationChangeEvent) => {
+        if (e.affectsConfiguration(linterEnableSetting)) {
+            if (vscode.workspace.getConfiguration().get(linterEnableSetting)) {
+                console.info('Starting language client');
+                client.start();
+            } else {
+                console.info('Stopping language client');
+                client.stop();
+            }
+        }
+    });
 
     const eventChange: vscode.Disposable = vscode.workspace
         .onDidChangeTextDocument((e: vscode.TextDocumentChangeEvent) => setPreviewContent(e.document, context));
 
     const previewCommand = vscode.commands.registerCommand('example.showPreviewToSide', () => openPreview(context));
 
-    context.subscriptions.push(previewCommand, eventChange);
+    context.subscriptions.push(previewCommand, eventChange, eventConfigurationChange);
 }
 
 export function deactivate() {
